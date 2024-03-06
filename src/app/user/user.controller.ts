@@ -15,6 +15,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { JwtAuthGuard } from '../auth/guard/jwt.guard';
 import { addUsersDTO, updateUsersDTO } from './user.dto';
+import { IsPublic } from 'src/utils/decorator';
 
 @ApiBearerAuth()
 @ApiTags('User')
@@ -22,6 +23,7 @@ import { addUsersDTO, updateUsersDTO } from './user.dto';
 export class UserController {
   constructor(private userService: UserService) {}
 
+  @IsPublic()
   @Get('all-users')
   async handleGetAllUsers(@Req() req) {
     const users = await this.userService.getAllUsers();

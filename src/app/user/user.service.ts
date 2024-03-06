@@ -5,12 +5,15 @@ import { Repository } from 'typeorm';
 import { UserType } from './user.enum';
 import { addUsersDTO, updateUsersDTO } from './user.dto';
 import { hashInformation } from 'src/utils/bcrypt.util';
+import { UserTry } from './model/newUser.entitytry';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>
+    private userRepository: Repository<User>,
+    @InjectRepository(UserTry, 'tryDB')
+    private userTryRepository: Repository<UserTry>
   ) {}
 
   async createUser(user: {
@@ -38,6 +41,8 @@ export class UserService {
   }
 
   async getAllUsers() {
+    const usertry = await this.userTryRepository.find();
+    console.log(usertry);
     return await this.userRepository.find({
       relations: { events: true }
     });

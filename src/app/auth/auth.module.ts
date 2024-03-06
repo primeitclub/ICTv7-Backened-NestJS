@@ -10,10 +10,12 @@ import { jwt } from 'src/config/env';
 import { JwtStratgegy } from './strategy/jwt.strategy';
 import { MailService } from 'src/mail/mail.service';
 import { OTP } from '../user/model/Otp.entity';
+import { UserTry } from '../user/model/newUser.entitytry';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, OTP]),
+    TypeOrmModule.forFeature([UserTry], 'tryDB'),
     JwtModule.register({
       secret: jwt.atSecretKey,
       signOptions: {
